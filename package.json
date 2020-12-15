@@ -1,15 +1,26 @@
 {
   "name": "bootstrapvue-treeview",
   "version": "0.1.0",
-  "private": true,
+  "author": {
+    "name": "Thiago de Freitas",    
+  },
+  "repository": "https://github.com/username/project",
+  "bugs": "https://github.com/username/vproject/issues",
+  "keywords": ["bootstrapvue-treeview", "treeview", "vue", "bootstrapvue"],
+  "files": ["dist"],
+  "private": false,  
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:npm": "vue-cli-service build --target lib --name bootstrapvue-treeview src/components/TreeView.vue",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "bootstrap": "^4.5.3",
+    "bootstrap-vue": "^2.21.0",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "vue": "^2.6.12"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

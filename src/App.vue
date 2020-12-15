@@ -1,28 +1,54 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <b-card>
+    <TreeView
+      :data="data"
+      labelExpandAll="EXPANDIR TODOS"
+      :showLineOnLeaf="true">
+    </TreeView>
+    </b-card>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TreeView from './components/TreeView.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    TreeView
+  },
+
+    data() {
+      return {
+          data: [
+            {
+              label: "Item 1",
+              childrens:[
+                {
+                  label: "Item 1.1"
+                }
+              ]
+            },
+            {
+              label: "Item 2",
+              childrens:[
+                {
+                  label: "Item 2.1"
+                }
+              ]
+            },
+            {
+              label: "Item 3",
+              childrens:[               
+              ]
+            },
+          ]     
+      }
+    },
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

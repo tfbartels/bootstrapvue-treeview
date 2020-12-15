@@ -1,24 +1,25 @@
-# bootstrapvue-treeview
+# Bootstrapvue Treeview
 
-## Project setup
+## Installation
+Install the package:
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+npm install bootstrapvue-treeview
 ```
 
-### Compiles and minifies for production
+## Usage
+Import into your application:
+
 ```
-npm run build
+import bootstrapvueTreeview from "bootstrapvue-treeview"
+Vue.use(bootstrapvueTreeview)
 ```
 
-### Lints and fixes files
-```
-npm run lint
+And add in your template :
+
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+
+## Props List
+
+
