@@ -2,6 +2,8 @@
 
 A Vuejs Treeview made with the [boostrapvue framework](https://bootstrap-vue.org/).
 
+![alt text](https://github.com/tfbartels/bootstrapvue-treeview/blob/master/src/assets/treeview.jpg "Treeview")
+
 ## Installation
 Install the package:
 ```bash
@@ -15,13 +17,6 @@ Import into your application:
 import bootstrapvueTreeview from "bootstrapvue-treeview"
 Vue.use(bootstrapvueTreeview)
 ```
-
-And add in your template :
-
-```
-
-```
-
 ## Props List
 | Name  | Type  | Description  | Default  |
 | :--------------------------- | :----------: | -------------------------------------------------------------------------------------------------- | :------: |
@@ -34,6 +29,58 @@ And add in your template :
 | nodeClick | Function | 	Callback to call a method when click on the node |  
 | nodeRightClick | Function | Displays the dividing line on the leaf when right click on the node | 
 
+
+## Example
+```js
+<template>
+    <TreeView
+      :data="data"
+    >
+    </TreeView>
+</template>
+
+<script>
+import TreeView from './components/TreeView.vue'
+
+export default {
+  name: 'App',
+  components: {
+    TreeView
+  },
+
+  data() {
+    return {
+        data: [
+          {
+            label: "Item 1",
+            childrens:[
+              {
+                label: "Item 1.1"
+              }
+            ]
+          },
+          {
+            label: "Item 2",
+            childrens:[
+              {
+                label: "Item 2.1",
+                childrens:[
+                  {
+                    label: "Item 2.1.1"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            label: "Item 3",
+          },
+        ]     
+    }
+  },
+}
+</script>
+```
 
 ## License
 MIT
