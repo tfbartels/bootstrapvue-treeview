@@ -10,8 +10,8 @@
         </div>      
         <node 
             :data="data"
-            :nameFieldLabel="nameFieldLabel"
-            :nameFieldChildrens="nameFieldChildrens"
+            :nameFieldLabelNode="nameFieldLabelNode"
+            :nameFieldChildrensNode="nameFieldChildrensNode"
             :showLineOnLeaf="showLineOnLeaf"
             @nodeClick="nodeClick"
             @nodeRightClick="nodeRightClick"
@@ -36,8 +36,8 @@ export default {
         data: { type: Array, default: () => [] },
         labelExpandAll:  { type: String, default: () => 'EXPAND ALL' },
         labelCollapseAll:  { type: String, default: () => 'COLLAPSE ALL' },
-        nameFieldLabel:  { type: String, default: () => 'label' },
-        nameFieldChildrens:  { type: String, default: () => 'childrens' }, 
+        nameFieldLabelNode:  { type: String, default: () => 'label' },
+        nameFieldChildrensNode:  { type: String, default: () => 'childrens' }, 
         showLineOnLeaf:  { type: Boolean, default: () => true },
     },
 
@@ -79,8 +79,8 @@ export default {
             itens.forEach(item => {                                  
                 this.$set(item, '_showDetails', value); 
 
-                if(item[`${this.nameFieldChildrens}`]){
-                  this.setShowDetailsRecursive(item[`${this.nameFieldChildrens}`], value);  
+                if(item[`${this.nameFieldChildrensNode}`]){
+                  this.setShowDetailsRecursive(item[`${this.nameFieldChildrensNode}`], value);  
                 }                  
             });
         },
