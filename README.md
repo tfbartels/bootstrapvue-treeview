@@ -4,19 +4,6 @@ A Vuejs Treeview made with the [boostrapvue framework](https://bootstrap-vue.org
 
 ![alt text](https://github.com/tfbartels/bootstrapvue-treeview/blob/master/src/assets/treeview.jpg "Treeview")
 
-## Installation
-Install the package:
-```bash
-npm install bootstrapvue-treeview
-```
-
-## Usage
-Import into your application:
-
-```js
-import bootstrapvueTreeview from "bootstrapvue-treeview"
-Vue.use(bootstrapvueTreeview)
-```
 ## Props List
 | Name  | Type  | Description  | Default  |
 | :--------------------------- | :----------: | -------------------------------------------------------------------------------------------------- | :------: |
