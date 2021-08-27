@@ -4,27 +4,39 @@
             <b-col :class="getNodeClass(item)">
                 <hr v-if="showLine(item)"> 
 
-                <div :class="getContentClass(item)">   
-                <button class="button" @click="itemClick(item)" @contextmenu="itemRightClick($event,item)">            
-                    <b-icon :icon="getArrowIcon(item)" 
-                            v-if="Array.isArray(item[`${nameFieldChildrensNode}`]) && item[`${nameFieldChildrensNode}`].length"
-                            class="pr-1">
-                    </b-icon>          
-                    <i v-if="item.icon" :class="item.icon" class="pr-1"></i>  
-                    <span>{{item[`${nameFieldLabelNode}`]}}</span>                
-                </button>
-               
-                <b-collapse v-model="item._showDetails" >
-                    <node 
-                        :data="item[`${nameFieldChildrensNode}`]"
-                        :nameFieldLabelNode="nameFieldLabelNode"
-                        :nameFieldChildrensNode="nameFieldChildrensNode"
-                        :showLineOnLeaf="showLineOnLeaf"
-                        @nodeClick="nodeClick"
-                        @nodeRightClick="nodeRightClick"
-                    >
-                    </node>  
-                </b-collapse>
+                <div :class="getContentClass(item)"> 
+                    <b-link                                          
+                        class='link'                                                             
+                        :href="item.href"              
+                        @click="itemClick(item, $event)" 
+                        @contextmenu="nodeRightClick(item, $event)">
+
+                        <div :style="item.style">                     
+                            <b-icon v-if="Array.isArray(item[`${nameFieldChildrens}`]) && item[`${nameFieldChildrens}`].length"  
+                                :icon="getArrowIcon(item)" 
+                                class="pr-1">
+                            </b-icon>
+                            
+                            <b-icon v-if="item.icon" 
+                                :icon="item.icon" 
+                                class="pr-1" >
+                            </b-icon>  
+                            
+                            <span>{{item[`${nameFieldLabel}`]}}</span>                
+                        </div>
+                    </b-link>
+                
+                    <b-collapse v-model="item.showDetails" >
+                        <node 
+                            :data="item[`${nameFieldChildrens}`]"
+                            :nameFieldLabel="nameFieldLabel"
+                            :nameFieldChildrens="nameFieldChildrens"
+                            :showLineOnLeaf="showLineOnLeaf"
+                            @nodeClick="nodeClick"
+                            @nodeRightClick="nodeRightClick"                                                           
+                        >
+                        </node>  
+                    </b-collapse>
                 </div>
             </b-col >                             
         </b-row>
@@ -45,45 +57,34 @@ export default {
 
     props: {
         data: { type: Array, default: () => [] },
-        nameFieldLabelNode:  { type: String, default: () => 'label' },
-        nameFieldChildrensNode:  { type: String, default: () => 'childrens' }, 
+        nameFieldLabel:  { type: String, default: () => 'label' },
+        nameFieldChildrens:  { type: String, default: () => 'childrens' }, 
         nameFieldFatherId:  { type: String, default: () => 'fatherId' },
         showLineOnLeaf:  { type: Boolean, default: () => true },
     },
 
-    data() {
-        return {
-            fields: [{ key: 'label' }],
-        }
-    },
 
     methods: {
-        itemClick(item){  
-            if(item[`${this.nameFieldChildrensNode}`]){                
-                this.$set(item, '_showDetails', !item._showDetails);                                           
+        itemClick(item, event){  
+            if(item[`${this.nameFieldChildrens}`]){                
+                this.$set(item, 'showDetails', !item.showDetails);                                           
             }else{              
-               this.$set(item, '_showDetails', false);   
+               this.$set(item, 'showDetails', false);   
             }
             
-            this.nodeClick(item);
+            this.nodeClick(item, event);
         },
 
-        nodeClick(item){
-            this.$emit('nodeClick', item);
+        nodeClick(item, event){            
+            this.$emit('nodeClick', item, event);                       
         },
 
-        itemRightClick(event,item){        
-            event.preventDefault();
-
-            this.nodeRightClick(item);
-        },
-
-        nodeRightClick(item){
-            this.$emit('nodeRightClick', item);
+        nodeRightClick(item, event){      
+            this.$emit('nodeRightClick', item, event);                                                   
         },
 
         getArrowIcon(item){     
-            return item._showDetails ? "chevron-down" : "chevron-right";           
+            return item.showDetails ? "chevron-down" : "chevron-right";           
         },
 
         getNodeClass(item){
@@ -95,7 +96,7 @@ export default {
         },
       
         getContentClass(item){
-            if(Array.isArray(item[`${this.nameFieldChildrensNode}`]) && item[`${this.nameFieldChildrensNode}`].length){
+            if(Array.isArray(item[`${this.nameFieldChildrens}`]) && item[`${this.nameFieldChildrens}`].length){
                 return 'content';
             }else{
                 return 'content-leaf';
@@ -103,18 +104,13 @@ export default {
         },
       
         showLine(item){ 
-            if(!item[`${this.nameFieldChildrensNode}`]){
+            if(!item[`${this.nameFieldChildrens}`]){
                 return this.showLineOnLeaf;
             }
             return true;            
         },
-    },
-    
-    mounted(){       
-        this.data.forEach(item => {                  
-            this.$set(item, '_showDetails', item.showDetails)                 
-        });
     }
+    
 }
 </script>
 
@@ -127,28 +123,24 @@ export default {
     }
 
     .node-root  {           
-        margin-left: 0rem;    
+        margin-left: 0rem;  
+        text-align: left;  
     }
 
     .node-child {     
-        margin-left: 1.5rem;       
+        margin-left: 1.5rem; 
+        text-align: left;      
     }
-
-    .node-root .content button, 
-    .node-root .content-leaf button, 
-    .node-child .content button,
-    .node-child .content-leaf button{        
-        background-color: transparent;
-        border-style: none;
-        width: 100%;
-        text-decoration: none;
-        text-align: left;
-        outline: none;
+ 
+    .node-root .content .link, 
+    .node-root .content-leaf .link, 
+    .node-child .content .link,
+    .node-child .content-leaf .link{        
+        color: initial;      
     }
 
     .content-leaf{        
        margin-left: 0.91rem;  
     }
-
 
 </style>

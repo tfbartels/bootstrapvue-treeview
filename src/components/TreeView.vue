@@ -1,20 +1,18 @@
 <template>
     <div>   
         <div class="text-right">     
-            <button class="button" @click="collapseAllClick(item)">                
-                <b-icon :icon="collapseAll.icon"                            
-                        class="pr-1">
-                </b-icon>   
+            <button class="button" @click="collapseAllClick()">
+                <b-icon class="pr-1" :icon="collapseAll.icon"></b-icon>  
                 <span>{{collapseAll.label}}</span>    
             </button>   
         </div>      
         <node 
             :data="data"
-            :nameFieldLabelNode="nameFieldLabelNode"
-            :nameFieldChildrensNode="nameFieldChildrensNode"
-            :showLineOnLeaf="showLineOnLeaf"
+            :nameFieldLabel="nameFieldLabel"
+            :nameFieldChildrens="nameFieldChildrens"
+            :showLineOnLeaf="showLineOnLeaf"        
             @nodeClick="nodeClick"
-            @nodeRightClick="nodeRightClick"
+            @nodeRightClick="nodeRightClick"              
         >
         </node>                                                   
     </div>
@@ -36,14 +34,13 @@ export default {
         data: { type: Array, default: () => [] },
         labelExpandAll:  { type: String, default: () => 'EXPAND ALL' },
         labelCollapseAll:  { type: String, default: () => 'COLLAPSE ALL' },
-        nameFieldLabelNode:  { type: String, default: () => 'label' },
-        nameFieldChildrensNode:  { type: String, default: () => 'childrens' }, 
+        nameFieldLabel:  { type: String, default: () => 'label' },
+        nameFieldChildrens:  { type: String, default: () => 'childrens' }, 
         showLineOnLeaf:  { type: Boolean, default: () => true },
     },
 
     data() {
-        return {
-            fields: [{ key: 'label' }],
+        return { 
             collapseAll:{
                 value: true,
                 icon: 'chevron-right',
@@ -52,13 +49,13 @@ export default {
         }
     },
 
-    methods: {
-        nodeClick(item){
-            this.$emit('nodeClick', item);
+    methods: {        
+        nodeClick(item, event){
+            this.$emit('nodeClick', item, event);
         }, 
         
-        nodeRightClick(item){
-            this.$emit('nodeRightClick', item);
+        nodeRightClick(item, event){
+            this.$emit('nodeRightClick', item, event);
         },
         
         collapseAllClick(){
@@ -77,10 +74,10 @@ export default {
 
         setShowDetailsRecursive(itens, value){
             itens.forEach(item => {                                  
-                this.$set(item, '_showDetails', value); 
+                this.$set(item, 'showDetails', value); 
 
-                if(item[`${this.nameFieldChildrensNode}`]){
-                  this.setShowDetailsRecursive(item[`${this.nameFieldChildrensNode}`], value);  
+                if(item[`${this.nameFieldChildrens}`]){
+                  this.setShowDetailsRecursive(item[`${this.nameFieldChildrens}`], value);  
                 }                  
             });
         },
